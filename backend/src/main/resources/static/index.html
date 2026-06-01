@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Survival Zombies Búnker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Permanent+Marker&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        body { user-select: none; }
+        /* Añade esta clase para ocultar el juego antes de empezar */
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div id="ranking-box">
+        <h3>TOP 3 RECORD</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nº</th>
+                    <th>SUPERVIVIENTE</th>
+                    <th>RONDA</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-cuerpo">
+                </tbody>
+        </table>
+    </div>
+
+   <div id="login-screen">
+        <h2>Búnker de Acceso</h2>
+        
+        <div class="auth-form">
+            <input type="text" id="username" placeholder="Tu nombre" required maxlength="12">
+            <input type="password" id="password" placeholder="Tu contraseña" required>
+        </div>
+        
+        <div id="skin-selector">
+            <img src="assets/jugador.png" data-skin="jugador.png" class="skin-option" onclick="selectSkin('jugador.png', this)">
+            <img src="assets/jugador2.png" data-skin="jugador2.png" class="skin-option" onclick="selectSkin('jugador2.png', this)">
+            <img src="assets/jugador3.png" data-skin="jugador3.png" class="skin-option" onclick="selectSkin('jugador3.png', this)">
+            <img src="assets/jugador4.png" data-skin="jugador4.png" class="skin-option" onclick="selectSkin('jugador4.png', this)">
+        </div>
+        
+        <div class="auth-buttons">
+            <button id="register-btn">REGISTRARSE</button>
+            <button id="login-btn">INICIAR SESIÓN</button>
+        </div>
+
+        <button id="start-game-btn" class="hidden">ENTRAR AL MAPA</button>
+    </div>
+
+    <div id="game-container" class="hidden">
+        <div id="ui-layer">
+            <div id="hud-top">
+                <span id="ronda-texto" class="oculto">RONDA 1</span>
+                <span id="zombies-texto">ZOMBIES RESTANTES: 0</span>
+            </div>
+
+            <div id="hud-bottom-left">
+                <span id="ronda-tally">I</span>
+            </div>
+
+            <div id="hud-bottom">
+                <span id="puntos-texto">$ 0</span>
+                <div id="floating-layer"></div>
+            </div>
+
+            <div id="perks-row">
+                <div class="perk" id="perk-1" data-perk="TITAN">T</div>
+                <div class="perk" id="perk-2" data-perk="QUICK_REVIVE">Q</div>
+                <div class="perk" id="perk-3" data-perk="JUGGER_NOG">J</div>
+                <div class="perk" id="perk-4" data-perk="ELECTRIC_UP">E</div>
+            </div>
+
+            <div id="blood-overlay" aria-hidden="true"></div>
+
+            <div id="pantalla-muerte" class="oculto">
+                <h1>Has Caído</h1>
+                <p>Esperando a que el equipo te reanime o termine la ronda...</p>
+            </div>
+
+            <div id="round-overlay" class="round-overlay oculto" aria-hidden="true">
+                <div class="round-overlay-content">
+                    <div class="round-overlay-title">RONDA SUPERADA</div>
+                    <div class="round-overlay-timer" id="round-overlay-timer">10</div>
+                    <button id="round-overlay-restart" class="restart-btn" style="display:none;">
+                        ↺ REINICIAR PARTIDA
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <canvas id="game" width="800" height="600" oncontextmenu="return false;"></canvas>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/roundOverlay.js"></script>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+version: '3.8'
+#Servicio mysql ---
+services:
+  mysql-zombies:
+    image: mysql:8.0
+    container_name: db_zombies
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: zombies_db
+      MYSQL_USER: zombie_user
+      MYSQL_PASSWORD: ${DB_PASSWORD:-zombie_password}
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    restart: always
+
+  #Servicio MongoDB ---
+  mongo-zombies:
+    image: mongo:7.0
+    container_name: mongo_zombies
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    restart: always
+
+  zombies-app:
+    build: .
+    container_name: app_zombies
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-zombies
+      - mongo-zombies 
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-zombies:3306/zombies_db?serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: zombie_user
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-zombie_password}
+      # Conexión interna de Docker para MongoDB
+      SPRING_DATA_MONGODB_URI: mongodb://mongo-zombies:27017/zombies_analytics
+      JWT_SECRET: U3VwZXJTZWNyZXRLZXlGb3Jab21iaWVzU2VydmVyMTIzNDU2Nzg5MEFCR0RFRkdISUpLTE1OT1BRUlNUVVZXWFla
+    restart: always
+
+volumes:
+  mysql_data:
+  mongo_data:

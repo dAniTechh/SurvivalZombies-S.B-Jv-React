@@ -1,0 +1,32 @@
+# --- Maven ---
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# --- Gradle ---
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+
+# --- Logs ---
+*.log
+
+# --- IDEs ---
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+.springBeans
+.sts4-cache
+bin/
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Docker ---
+# Si en algún momento decides guardar datos persistentes en carpetas locales,
+# es mejor no subirlas a Git:
+# mysql_data/
